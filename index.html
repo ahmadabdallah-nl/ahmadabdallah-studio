@@ -239,6 +239,11 @@ section{padding:120px 40px}
 .c-link-label{font-size:10px;color:#bbb;letter-spacing:.12em;text-transform:uppercase}
 .c-note{font-size:12px;color:#666;line-height:1.9;margin-bottom:24px;font-weight:300}
 .c-note strong{color:#000;font-weight:400}
+#contact-form input,#contact-form textarea{width:100%;border:1px solid #e8e8e8;border-radius:0;padding:12px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;background:#fff;color:#000;display:block;margin-bottom:12px;outline:none;transition:border-color .2s}
+#contact-form input:focus,#contact-form textarea:focus{border-color:#000}
+#contact-form button{display:inline-block;font-size:11px;font-weight:400;letter-spacing:.08em;color:#fff;background:#000;border:none;padding:12px 24px;cursor:pointer;transition:background .2s;font-family:'DM Sans',sans-serif}
+#contact-form button:hover{background:#333}
+#form-success{font-size:12px;color:#555;margin-top:16px}
 .btn{
   display:inline-block;
   font-size:10px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;
@@ -502,7 +507,13 @@ footer{
     <div>
       <p class="c-note">Good brands are built on intention. I work with brands that know what they want to say — and need someone to help them say it in a way people actually remember.</p>
       <p class="c-note"><strong>Currently available</strong> for new projects — Netherlands and remote.</p>
-      <a href="mailto:hello@ahmadabdallah.studio" class="btn">Send a message →</a>
+      <form id="contact-form" action="https://formspree.io/f/xaqpokdj" method="POST">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+        <button type="submit">Send message →</button>
+      </form>
+      <p id="form-success" style="display:none">Thank you — I'll be in touch soon.</p>
     </div>
   </div>
 </section>
@@ -640,6 +651,8 @@ function openSvc(i){
   `;
   showPg('pg-svc-detail');
 }
+const cf=document.getElementById('contact-form');
+if(cf){cf.addEventListener('submit',async function(e){e.preventDefault();const data=new FormData(cf);const res=await fetch('https://formspree.io/f/xaqpokdj',{method:'POST',body:data,headers:{'Accept':'application/json'}});if(res.ok){cf.style.display='none';document.getElementById('form-success').style.display='block';}});}
 </script>
 </body>
 </html>
