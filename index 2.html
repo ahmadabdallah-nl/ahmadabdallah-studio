@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Abdallah — Creative Media Director</title>
+<meta name="description" content="Creative Media Direction — Haarlem, Netherlands">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Editorial+New:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=PP+Neue+Montreal:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{
+  background:#fff;
+  color:#000;
+  font-family:'Inter',system-ui,sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+#dot{position:fixed;width:5px;height:5px;background:#000;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s}
+body.link-hover #dot{width:32px;height:32px;background:transparent;border:1px solid #000}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 40px;height:56px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid #e8e8e8;
+}
+.n-logo{font-size:12px;font-weight:400;letter-spacing:.04em;text-decoration:none;color:#000}
+.n-links{display:flex;gap:32px;list-style:none}
+.n-links a{font-size:11px;font-weight:300;letter-spacing:.06em;text-decoration:none;color:#666;transition:color .2s}
+.n-links a:hover{color:#000}
+.n-cta{font-size:11px;font-weight:400;letter-spacing:.06em;text-decoration:none;color:#000;border:1px solid #000;padding:7px 16px;transition:background .2s,color .2s}
+.n-cta:hover{background:#000;color:#fff}
+
+/* PAGES */
+.pg{display:none}.pg.show{display:block}
+
+/* ── HOME ── */
+
+/* HERO */
+#hero{
+  height:100vh;min-height:600px;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:0 40px 64px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:#f5f5f5;
+}
+.hero-bg img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  opacity:.45;
+  display:block;
+  filter:grayscale(100%);
+}
+.hero-content{position:relative;z-index:1}
+.hero-label{
+  font-size:10px;font-weight:400;letter-spacing:.2em;
+  text-transform:uppercase;color:#666;
+  margin-bottom:24px;
+}
+.hero-title{
+  font-family:'Georgia','Times New Roman',serif;
+  font-size:clamp(48px,7vw,96px);
+  font-weight:400;
+  line-height:1.0;
+  letter-spacing:-.02em;
+  color:#000;
+  margin-bottom:40px;
+  max-width:800px;
+}
+.hero-title em{font-style:italic;color:#444}
+.hero-sub{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:1px solid rgba(0,0,0,.12);
+  padding-top:24px;
+  max-width:800px;
+}
+.hero-desc{font-size:12px;color:#666;line-height:1.7;max-width:360px}
+.hero-location{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#999}
+
+/* SECTION */
+section{padding:100px 40px}
+.sec-label{
+  font-size:10px;font-weight:400;letter-spacing:.18em;
+  text-transform:uppercase;color:#999;
+  margin-bottom:48px;
+  display:flex;align-items:center;gap:16px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:#e8e8e8;max-width:60px}
+
+/* WORK */
+#s-work{background:#fff;padding-top:80px}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#e8e8e8;border:1px solid #e8e8e8}
+.witem{background:#fff;position:relative;overflow:hidden;cursor:none}
+.witem:first-child{grid-column:span 2}
+.witem-img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:center top;transition:transform .8s cubic-bezier(.16,1,.3,1);filter:grayscale(20%)}
+.witem:first-child .witem-img{aspect-ratio:21/9}
+.witem:hover .witem-img{transform:scale(1.04)}
+.witem-info{padding:20px 24px 24px;border-top:1px solid #e8e8e8}
+.witem-year{font-size:10px;color:#999;letter-spacing:.08em;margin-bottom:6px}
+.witem-name{font-size:14px;font-weight:400;color:#000;margin-bottom:4px;letter-spacing:-.01em}
+.witem-role{font-size:11px;color:#999}
+.witem-arrow{
+  position:absolute;top:20px;right:20px;
+  width:32px;height:32px;
+  background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  opacity:0;transform:translateY(4px);
+  transition:opacity .25s,transform .25s;
+}
+.witem:hover .witem-arrow{opacity:1;transform:translateY(0)}
+
+/* SERVICES */
+#s-svc{background:#fafafa;padding:80px 40px}
+.svc-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:48px}
+.svc-hl{font-family:'Georgia','Times New Roman',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em}
+.svc-hl em{font-style:italic;color:#444}
+.svc-note{font-size:12px;color:#666;line-height:1.75;max-width:360px}
+.svc-list{border-top:1px solid #e8e8e8}
+.srow{
+  display:grid;grid-template-columns:40px 1fr 1fr 24px;
+  gap:20px;align-items:center;
+  padding:20px 0;
+  border-bottom:1px solid #e8e8e8;
+  cursor:none;
+  transition:background .2s;
+}
+.srow:hover{background:#f5f5f5;margin:0 -12px;padding:20px 12px}
+.srow-n{font-size:10px;color:#bbb;letter-spacing:.08em}
+.srow-name{font-size:13px;font-weight:400;color:#000;letter-spacing:-.01em}
+.srow-desc{font-size:11px;color:#999;line-height:1.6}
+.srow-arr{font-size:12px;color:#bbb;transition:color .2s,transform .2s}
+.srow:hover .srow-arr{color:#000;transform:translateX(2px)}
+
+/* ABOUT */
+#s-about{background:#fff;padding:80px 40px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-hl{font-family:'Georgia','Times New Roman',serif;font-size:clamp(24px,3vw,38px);font-weight:400;line-height:1.2;letter-spacing:-.01em;margin-bottom:28px}
+.about-hl em{font-style:italic;color:#444}
+.about-p{font-size:12px;color:#555;line-height:1.85;margin-bottom:16px}
+.about-p strong{color:#000;font-weight:400}
+.press-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#bbb;margin:28px 0 12px}
+.press-link{
+  display:flex;justify-content:space-between;align-items:center;
+  text-decoration:none;color:#000;
+  font-size:12px;
+  padding:12px 0;
+  border-bottom:1px solid #e8e8e8;
+  transition:padding-left .2s;
+}
+.press-link:hover{padding-left:6px;color:#666}
+.press-link span{font-size:10px;color:#bbb;letter-spacing:.08em}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:36px}
+.stat-n{font-family:'Georgia','Times New Roman',serif;font-size:36px;font-weight:400;line-height:1;margin-bottom:4px;letter-spacing:-.02em}
+.stat-l{font-size:10px;color:#bbb;letter-spacing:.12em;text-transform:uppercase}
+.edu-list{border-top:1px solid #e8e8e8}
+.edu-item{padding:14px 0;border-bottom:1px solid #e8e8e8}
+.edu-s{font-size:12px;font-weight:400;margin-bottom:2px}
+.edu-d{font-size:10px;color:#bbb;letter-spacing:.04em}
+
+/* CONTACT */
+#s-contact{background:#fafafa;padding:80px 40px}
+.contact-hl{
+  font-family:'Georgia','Times New Roman',serif;
+  font-size:clamp(36px,6vw,80px);
+  font-weight:400;line-height:1.0;
+  letter-spacing:-.025em;
+  margin-bottom:60px;
+  max-width:700px;
+}
+.contact-hl em{font-style:italic;color:#444}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.c-links{border-top:1px solid #e8e8e8}
+.c-link{
+  display:flex;justify-content:space-between;align-items:center;
+  text-decoration:none;color:#000;
+  padding:16px 0;border-bottom:1px solid #e8e8e8;
+  font-size:12px;transition:padding-left .2s;
+}
+.c-link:hover{padding-left:6px}
+.c-link-label{font-size:10px;color:#bbb;letter-spacing:.1em;text-transform:uppercase}
+.c-note{font-size:12px;color:#666;line-height:1.8;margin-bottom:24px}
+.c-note strong{color:#000;font-weight:400}
+.btn{
+  display:inline-block;
+  font-size:11px;font-weight:400;letter-spacing:.08em;
+  text-decoration:none;color:#fff;
+  background:#000;
+  padding:12px 24px;
+  transition:background .2s;
+}
+.btn:hover{background:#333}
+
+/* FOOTER */
+footer{
+  padding:28px 40px;
+  border-top:1px solid #e8e8e8;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ft{font-size:10px;color:#bbb;letter-spacing:.06em}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.r.in{opacity:1;transform:none}
+.r.d1{transition-delay:.1s}.r.d2{transition-delay:.2s}.r.d3{transition-delay:.3s}
+
+/* ── PROJECT PAGE ── */
+#pg-proj{background:#fff}
+.pd-hero{position:relative;overflow:hidden;background:#f5f5f5;height:70vh;min-height:480px}
+.pd-hero img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:grayscale(15%)}
+.pd-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 50%)}
+.pd-hero-text{position:absolute;bottom:0;left:0;right:0;padding:40px;color:#fff}
+.pd-back{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;color:#fff;opacity:.6;
+  transition:opacity .2s;margin-bottom:32px;cursor:none;
+}
+.pd-back:hover{opacity:1}
+.pd-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.pd-title{font-family:'Georgia','Times New Roman',serif;font-size:clamp(32px,5vw,64px);font-weight:400;line-height:1;letter-spacing:-.02em;margin-bottom:20px}
+.pd-meta-row{display:flex;gap:24px;flex-wrap:wrap}
+.pd-meta-i{font-size:11px;color:rgba(255,255,255,.5)}
+.pd-meta-i strong{color:#fff;font-weight:400}
+.pd-body{padding:60px 40px;max-width:1100px;margin:0 auto}
+.pd-cols{display:grid;grid-template-columns:200px 1fr;gap:60px;margin-bottom:60px}
+.pd-side-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bbb;margin-bottom:14px}
+.pd-tag-list{display:flex;flex-direction:column}
+.pd-tag-i{font-size:11px;color:#555;padding:8px 0;border-bottom:1px solid #f0f0f0}
+.pd-main-hl{font-family:'Georgia','Times New Roman',serif;font-size:clamp(22px,2.5vw,34px);font-weight:400;line-height:1.2;letter-spacing:-.01em;margin-bottom:24px}
+.pd-main-hl em{font-style:italic;color:#444}
+.pd-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:16px}
+.pd-p strong{color:#000;font-weight:400}
+.pd-stats-row{display:flex;gap:40px;margin-top:36px;padding-top:36px;border-top:1px solid #e8e8e8}
+.pd-sn{font-family:'Georgia','Times New Roman',serif;font-size:32px;font-weight:400;line-height:1;margin-bottom:4px;letter-spacing:-.02em}
+.pd-sl{font-size:10px;color:#bbb;letter-spacing:.1em;text-transform:uppercase}
+.pd-gallery{margin-top:0}
+.pd-gal-grid{display:grid;gap:1px;background:#e8e8e8}
+.pd-gal-grid.two{grid-template-columns:1fr 1fr}
+.pd-gal-grid.one{grid-template-columns:1fr}
+.pd-gal-item{overflow:hidden;background:#f5f5f5}
+.pd-gal-item img{width:100%;display:block;object-fit:cover;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.pd-gal-item.tall img{aspect-ratio:3/4}
+.pd-gal-item.wide img{aspect-ratio:16/9}
+.pd-gal-item:hover img{transform:scale(1.03)}
+.pd-next{padding:48px 40px;border-top:1px solid #e8e8e8;display:flex;justify-content:space-between;align-items:center}
+.pd-next-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bbb;margin-bottom:8px}
+.pd-next-name{font-family:'Georgia','Times New Roman',serif;font-size:clamp(18px,2.2vw,28px);font-weight:400;letter-spacing:-.01em;cursor:none;transition:color .2s}
+.pd-next-name:hover{color:#666}
+.btn-outline{display:inline-block;font-size:11px;letter-spacing:.08em;text-decoration:none;color:#000;border:1px solid #e8e8e8;padding:10px 20px;transition:border-color .2s;font-weight:300}
+.btn-outline:hover{border-color:#000}
+
+/* ── SERVICE PAGE ── */
+#pg-svc{background:#fff}
+.sd-hero{padding:100px 40px 60px;border-bottom:1px solid #e8e8e8;background:#fafafa}
+.sd-num{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#bbb;margin-bottom:16px}
+.sd-title{font-family:'Georgia','Times New Roman',serif;font-size:clamp(36px,6vw,80px);font-weight:400;line-height:.95;letter-spacing:-.025em;margin-bottom:28px}
+.sd-title em{font-style:italic;color:#444}
+.sd-sub{font-size:13px;color:#666;line-height:1.7;max-width:480px}
+.sd-body{display:grid;grid-template-columns:220px 1fr;gap:60px;padding:60px 40px}
+.sd-inc-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bbb;margin-bottom:14px}
+.sd-inc-item{font-size:11px;color:#555;padding:10px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px}
+.sd-inc-item::before{content:'—';color:#bbb;font-size:10px;flex-shrink:0}
+.sd-main-hl{font-family:'Georgia','Times New Roman',serif;font-size:clamp(20px,2.5vw,30px);font-weight:400;line-height:1.2;letter-spacing:-.01em;margin-bottom:22px}
+.sd-main-hl em{font-style:italic;color:#444}
+.sd-p{font-size:12px;color:#555;line-height:1.9;margin-bottom:16px}
+.sd-p strong{color:#000;font-weight:400}
+.sd-cta{margin-top:36px;padding-top:36px;border-top:1px solid #e8e8e8}
+.sd-others-wrap{padding:0 40px 60px}
+.sd-others-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bbb;margin-bottom:20px}
+.sd-others{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e8e8e8;border:1px solid #e8e8e8}
+.sd-oi{background:#fff;padding:24px;cursor:none;transition:background .2s}
+.sd-oi:hover{background:#f5f5f5}
+.sd-oi-n{font-size:10px;color:#bbb;letter-spacing:.08em;margin-bottom:8px}
+.sd-oi-name{font-size:13px;font-weight:400;color:#000;line-height:1.3;letter-spacing:-.01em}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .n-links{display:none}
+  #hero,section,footer{padding-left:20px;padding-right:20px}
+  .hero-title{font-size:clamp(36px,9vw,60px)}
+  .work-grid,.about-grid,.contact-grid,.svc-head,.pd-cols,.sd-body{grid-template-columns:1fr;gap:32px}
+  .witem:first-child{grid-column:span 1}
+  .srow{grid-template-columns:32px 1fr 24px}.srow-desc{display:none}
+  .pd-hero-text,.pd-body,.pd-next,.sd-hero,.sd-body,.sd-others-wrap{padding-left:20px;padding-right:20px}
+  .sd-others{grid-template-columns:1fr 1fr}
+  body{cursor:auto}#dot{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="dot"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="n-logo" onclick="goHome();return false">Ahmad Abdallah</a>
+  <ul class="n-links">
+    <li><a href="#" onclick="goHome();goto('s-work');return false">Work</a></li>
+    <li><a href="#" onclick="goHome();goto('s-svc');return false">Services</a></li>
+    <li><a href="#" onclick="goHome();goto('s-about');return false">About</a></li>
+    <li><a href="#" onclick="goHome();goto('s-contact');return false">Contact</a></li>
+  </ul>
+  <a href="#" class="n-cta" onclick="goHome();goto('s-contact');return false">Work with me</a>
+</nav>
+
+<!-- ════ HOME ════ -->
+<div id="pg-home" class="pg show">
+
+<section id="hero">
+  <div class="hero-bg">
+    <img src="https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278355/BLYiJOlRiModNeQiGNZNGiL98_v03vc8.gif" alt="Ahmad Abdallah">
+  </div>
+  <div class="hero-content">
+    <p class="hero-label">Ahmad Abdallah Studio &nbsp;·&nbsp; Available</p>
+    <h1 class="hero-title">Creative<br><em>Media</em><br>Direction.</h1>
+    <div class="hero-sub">
+      <p class="hero-desc">Taking brand ideas from concept to reality — across visual direction, content, and media.</p>
+      <span class="hero-location">Haarlem, NL</span>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="s-work">
+  <div class="sec-label r">Selected Work</div>
+  <div class="work-grid r d1">
+    <div class="witem" onclick="openProj('milan')">
+      <img class="witem-img" src="https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278355/BLYiJOlRiModNeQiGNZNGiL98_v03vc8.gif" alt="Milan Design Week">
+      <div class="witem-info"><div class="witem-year">2025</div><div class="witem-name">Milan Design Week</div><div class="witem-role">Media Direction &amp; Event Coverage</div></div>
+      <div class="witem-arrow">↗</div>
+    </div>
+    <div class="witem" onclick="openProj('blok')">
+      <img class="witem-img" src="https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278460/pAG39RokKGcNpAXvt0dKsjRxmV0.png_xbjb3u.webp" alt="BLOK">
+      <div class="witem-info"><div class="witem-year">2024–25</div><div class="witem-name">BLOK Plaatmateriaal</div><div class="witem-role">Social Media Strategy &amp; Growth</div></div>
+      <div class="witem-arrow">↗</div>
+    </div>
+    <div class="witem" onclick="openProj('amor')">
+      <img class="witem-img" src="https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278403/fLMdnMWeDfd0BrDEWp1Ff3bTlFE.jpg_em6skc.webp" alt="Amor Fati">
+      <div class="witem-info"><div class="witem-year">2024</div><div class="witem-name">Amor Fati</div><div class="witem-role">Editorial Photography &amp; Art Direction</div></div>
+      <div class="witem-arrow">↗</div>
+    </div>
+    <div class="witem" onclick="openProj('zielsglas')">
+      <img class="witem-img" src="https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278017/IMG_0522_pqloej.heic" alt="Zielsglas">
+      <div class="witem-info"><div class="witem-year">2026</div><div class="witem-name">Zielsglas Exhibition</div><div class="witem-role">Media Lead &amp; Cultural Event</div></div>
+      <div class="witem-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="s-svc">
+  <div class="sec-label r">Services</div>
+  <div class="svc-head r d1">
+    <h2 class="svc-hl">Built for brands<br>that want to<br><em>mean something.</em></h2>
+    <p class="svc-note">Every service starts with one question: what do you want people to feel when they encounter your brand?</p>
+  </div>
+  <div class="svc-list r d2">
+    <div class="srow" onclick="openSvc(0)"><span class="srow-n">01</span><span class="srow-name">Social Media Strategy &amp; Management</span><span class="srow-desc">Full-stack social presence built to perform, not just to post.</span><span class="srow-arr">→</span></div>
+    <div class="srow" onclick="openSvc(1)"><span class="srow-n">02</span><span class="srow-name">Brand Strategy &amp; Identity</span><span class="srow-desc">Positioning and visual identity that holds attention.</span><span class="srow-arr">→</span></div>
+    <div class="srow" onclick="openSvc(2)"><span class="srow-n">03</span><span class="srow-name">Art Direction</span><span class="srow-desc">Concept to execution — campaigns that make a brand recognizable.</span><span class="srow-arr">→</span></div>
+    <div class="srow" onclick="openSvc(3)"><span class="srow-n">04</span><span class="srow-name">Content Creation &amp; Architecture</span><span class="srow-desc">Systems that scale — not one-off pieces that disappear.</span><span class="srow-arr">→</span></div>
+    <div class="srow" onclick="openSvc(4)"><span class="srow-n">05</span><span class="srow-name">Media Direction &amp; Event Coverage</span><span class="srow-desc">On-the-ground leadership from strategy to post-event rollout.</span><span class="srow-arr">→</span></div>
+    <div class="srow" onclick="openSvc(5)"><span class="srow-n">06</span><span class="srow-name">Digital Advertising Management</span><span class="srow-desc">Paid campaigns that convert — end-to-end.</span><span class="srow-arr">→</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="s-about">
+  <div class="sec-label r">About</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-hl r">I take ideas<br>from concept<br>to <em>reality.</em></h2>
+      <p class="about-p r d1">Ahmad Abdallah — Creative Media Director based in Haarlem, Netherlands. What drives me is seeing an idea come to life — watching the process I build actually change how a brand is perceived.</p>
+      <p class="about-p r d2">Over two years working across brand strategy, visual direction, content systems, and event media. <strong>400% organic social growth. Milan Design Week. Netherlands and internationally.</strong></p>
+      <p class="press-label r d3">Press</p>
+      <a href="https://www.jutter.nl/hoe-ahmad-abdallah-een-droomcarriere-kreeg-vanuit-ijmuiden/" target="_blank" rel="noopener" class="press-link r d3">De Jutter <span>Read →</span></a>
+      <a href="https://www.ijmuidercourant.nl/regio/ijmond/ahmad-18-uit-ijmuiden-werkt-aan-zijn-toekomst-van-vluchteling-tot-creative-media-manager.-mee-naar-beurzen-in-milaan-en-parijs/123346226.html" target="_blank" rel="noopener" class="press-link r d3">IJmuider Courant <span>Read →</span></a>
+    </div>
+    <div class="r d1">
+      <div class="stats-grid">
+        <div><div class="stat-n">2+</div><div class="stat-l">Years exp.</div></div>
+        <div><div class="stat-n">400%</div><div class="stat-l">Organic growth</div></div>
+        <div><div class="stat-n">2</div><div class="stat-l">Countries</div></div>
+        <div><div class="stat-n">19</div><div class="stat-l">Years old</div></div>
+      </div>
+      <div class="edu-list">
+        <div class="edu-item"><div class="edu-s">Harvard Business School Online</div><div class="edu-d">Marketing — 2025–2027</div></div>
+        <div class="edu-item"><div class="edu-s">Vogue College of Fashion</div><div class="edu-d">Creative Direction — 2025</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="s-contact">
+  <div class="sec-label r">Contact</div>
+  <h2 class="contact-hl r d1">Let's build<br>something<br><em>that matters.</em></h2>
+  <div class="contact-grid r d2">
+    <div class="c-links">
+      <a href="mailto:hello@ahmadabdallah.studio" class="c-link"><span>hello@ahmadabdallah.studio</span><span class="c-link-label">Email</span></a>
+      <a href="https://www.linkedin.com/in/ahmadabdallah" target="_blank" rel="noopener" class="c-link"><span>LinkedIn</span><span class="c-link-label">Professional</span></a>
+      <a href="https://www.jutter.nl/hoe-ahmad-abdallah-een-droomcarriere-kreeg-vanuit-ijmuiden/" target="_blank" rel="noopener" class="c-link"><span>De Jutter</span><span class="c-link-label">Press</span></a>
+      <a href="https://www.ijmuidercourant.nl/regio/ijmond/ahmad-18-uit-ijmuiden-werkt-aan-zijn-toekomst-van-vluchteling-tot-creative-media-manager.-mee-naar-beurzen-in-milaan-en-parijs/123346226.html" target="_blank" rel="noopener" class="c-link"><span>IJmuider Courant</span><span class="c-link-label">Press</span></a>
+    </div>
+    <div>
+      <p class="c-note">Good brands are built on intention. I work with brands that know what they want to say — and need someone to help them say it in a way people actually remember.</p>
+      <p class="c-note"><strong>Currently available</strong> for new projects — Netherlands and remote.</p>
+      <a href="mailto:hello@ahmadabdallah.studio" class="btn">Send a message →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="ft">Ahmad Abdallah Studio</span>
+  <span class="ft">Creative Media Direction — Haarlem, NL</span>
+  <span class="ft">© 2025</span>
+</footer>
+
+</div><!-- /pg-home -->
+
+<!-- ════ PROJECT ════ -->
+<div id="pg-proj" class="pg"><div id="proj-slot"></div></div>
+
+<!-- ════ SERVICE ════ -->
+<div id="pg-svc-detail" class="pg"><div id="svc-slot"></div></div>
+
+<script>
+const PJ={
+  milan:{title:'Milan Design Week',yr:'2025',role:'Media Director',client:'BLOK × Carina Riezebos',event:'Masterly — The Dutch in Milano',hero:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278113/IMG_7990_2_fnvfzw.heic',hl:'Directing the Dutch design story in <em>Milan.</em>',body:'<p class="pd-p">For Milan Design Week 2025, I served as Media Director for BLOK and designer Carina Riezebos at <strong>Masterly — The Dutch in Milano</strong>, one of the most prestigious satellite events of the world\'s largest design fair.</p><p class="pd-p">My role covered the full media operation: briefing photographers, managing content capture on-site, directing the social media narrative in real time, and ensuring every piece of content positioned BLOK at the centre of the conversation.</p><p class="pd-p">The challenge was translating a physical experience — furniture, glass design, spatial presence — into digital content that holds attention across Instagram, LinkedIn, and beyond.</p>',stats:[{n:'Milan',l:'Design Week'},{n:'2025',l:'Year'},{n:'1 week',l:'On-site'}],tags:['Media Direction','Event Coverage','Photography Direction','Content Strategy','Social Media'],imgs:[{s:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278355/BLYiJOlRiModNeQiGNZNGiL98_v03vc8.gif',c:'tall'},{s:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278113/IMG_7990_2_fnvfzw.heic',c:'tall'}],next:'blok'},
+  blok:{title:'BLOK Plaatmateriaal',yr:'2024–25',role:'Social Media Manager',client:'BLOK Plaatmateriaal',event:'Ongoing',hero:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278460/pAG39RokKGcNpAXvt0dKsjRxmV0.png_xbjb3u.webp',hl:'From invisible to <em>400% growth</em> — organically.',body:'<p class="pd-p">BLOK is a premium supplier of constructive and decorative panel materials. When I joined, their social media was underutilised — inconsistent, low-reach, and disconnected from their actual brand quality.</p><p class="pd-p">I built a complete social media system from scratch: content strategy, visual direction, posting cadence, caption voice, and community management. <strong>No ad spend — purely strategic, high-quality content.</strong></p><p class="pd-p">Result: 400% Instagram reach increase, LinkedIn impressions from 2–7K to 12–15K per month, and a Facebook campaign hitting a 376% reach spike.</p>',stats:[{n:'400%',l:'Instagram growth'},{n:'376%',l:'Facebook spike'},{n:'0€',l:'Ad spend'}],tags:['Social Media Strategy','Content Direction','Community Management','Growth'],imgs:[{s:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278460/pAG39RokKGcNpAXvt0dKsjRxmV0.png_xbjb3u.webp',c:'wide'}],next:'amor'},
+  amor:{title:'Amor Fati',yr:'2024',role:'Art Director & Photographer',client:'Isabelle Beernaerts',event:'Dance production — NL & Belgium',hero:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278403/fLMdnMWeDfd0BrDEWp1Ff3bTlFE.jpg_em6skc.webp',hl:'Capturing movement that <em>cannot be staged.</em>',body:'<p class="pd-p">Amor Fati is a dance production by Isabelle Beernaerts, touring theatres across the Netherlands and Belgium. The set features furniture designed by Carina Riezebos for BLOK.</p><p class="pd-p">Before shooting, I watched the full performance — studying the rhythm, the moments of tension, the gestures that carried the most meaning. Then I mapped exactly which frames I wanted to capture.</p><p class="pd-p">The goal was not to make dance photography. It was to make <strong>images that made people want to see the show</strong> — mood over documentation.</p>',stats:[{n:'2024',l:'Year'},{n:'NL & BE',l:'Tour'},{n:'Art',l:'Direction'}],tags:['Art Direction','Editorial Photography','Dance Production','Visual Storytelling'],imgs:[{s:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278403/fLMdnMWeDfd0BrDEWp1Ff3bTlFE.jpg_em6skc.webp',c:'tall'},{s:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278430/U88YHjzoirRHo9kPlBnRbxOFxUA.jpg_j4sfms.avif',c:'tall'}],next:'zielsglas'},
+  zielsglas:{title:'Zielsglas Exhibition',yr:'2026',role:'Freelance Media Lead',client:'Carina Riezebos',event:'Paviljoen Welgelegen, Haarlem',hero:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278017/IMG_0522_pqloej.heic',hl:'Telling the story of <em>glass as soul.</em>',body:'<p class="pd-p">Zielsglas is an exhibition of glass installations by artists Marc Barreda, Maroeska Metz, Barbara Nanning, and Carina Riezebos — at Paviljoen Welgelegen in Haarlem, a space of the Province of Noord-Holland.</p><p class="pd-p">As freelance Media Lead, I was responsible for the complete media strategy and execution: photography, promotional content, and the visual narrative that would bring the show to audiences beyond the physical space.</p><p class="pd-p">The work required understanding the artists\' intentions — particularly Riezebos\'s exploration of <strong>glass as material, memory, and metaphor</strong> — and translating that into content as considered as the work itself.</p>',stats:[{n:'2026',l:'Year'},{n:'Haarlem',l:'Location'},{n:'4',l:'Artists'}],tags:['Media Lead','Exhibition','Photography','Cultural Event'],imgs:[{s:'https://res.cloudinary.com/dhinj2qqi/image/upload/v1773278017/IMG_0522_pqloej.heic',c:'wide'}],next:'milan'}
+};
+
+const SV=[
+  {num:'01',title:'Social Media Strategy & Management',td:'Social Media<br>Strategy <em>&amp;</em> Management',sub:'Full-stack social presence — from platform strategy to community management and growth.',inc:['Platform audit & strategy','Content planning & editorial calendar','Visual content direction','Caption writing & brand voice','Community management','Monthly reporting'],hl:'Built to <em>perform</em>, not just to post.',body:'<p class="sd-p">Most brands post content. Few build systems. I build complete social media systems: the strategy, the visual direction, and the cadence that keeps it consistent. Everything is built around your actual brand positioning.</p><p class="sd-p">Proof: <strong>400% organic growth for BLOK Plaatmateriaal</strong> — no ad spend.</p>'},
+  {num:'02',title:'Brand Strategy & Identity',td:'Brand Strategy<br><em>&amp;</em> Identity',sub:'Positioning, voice, and visual identity that holds attention and means something.',inc:['Brand positioning','Brand voice & messaging','Visual identity system','Color & typography','Brand guidelines','Channel application'],hl:'Brands that <em>mean something.</em>',body:'<p class="sd-p">A brand is not a logo. It\'s the feeling someone gets when they encounter you. That feeling has to be intentional, consistent, and true to what you actually are.</p><p class="sd-p">I work with brands at the positioning stage: who are you, who are you for, and what do you want people to feel? <strong>Everything else follows from there.</strong></p>'},
+  {num:'03',title:'Art Direction',td:'Art<br><em>Direction</em>',sub:'From concept to visual execution — campaigns that make a brand instantly recognizable.',inc:['Campaign concept','Mood board & visual language','Shoot direction','Visual systems','Photography direction','Post-production direction'],hl:'The gap between a good idea<br>and <em>a great image.</em>',body:'<p class="sd-p">Art direction is making sure a visual actually communicates what it\'s supposed to. Not just taking good photos — making sure every frame serves the concept, and every concept serves the brand.</p><p class="sd-p">I\'ve directed photography for dance productions, design exhibitions, and brand campaigns. <strong>Always: understand the intention first, then make the camera tell that story.</strong></p>'},
+  {num:'04',title:'Content Creation & Architecture',td:'Content Creation<br><em>&amp;</em> Architecture',sub:'Content that builds a world around your brand — structured systems that scale.',inc:['Content strategy & pillars','Multi-platform planning','Visual content production','Copywriting & captions','Content calendar','Cross-channel strategy'],hl:'Not one-off pieces —<br><em>systems</em> that scale.',body:'<p class="sd-p">Content without architecture is noise. I design content systems: the pillars that define what you talk about, the formats that suit each platform, the cadence that keeps you consistent.</p><p class="sd-p">The result is content that <strong>builds on itself over time</strong> — a body of work that represents your brand.</p>'},
+  {num:'05',title:'Media Direction & Event Coverage',td:'Media Direction<br><em>&amp;</em> Event Coverage',sub:'On-the-ground media leadership for events, launches, and activations.',inc:['Pre-event media strategy','On-site content direction','Photography briefing','Real-time social execution','Press kit creation','Post-event rollout'],hl:'Events that live<br><em>beyond the room.</em>',body:'<p class="sd-p">An event without media strategy reaches only the people in the room. I\'ve directed media at Milan Design Week, cultural exhibitions, and dance productions touring the Netherlands and Belgium.</p><p class="sd-p">From pre-event planning to post-event rollout, I handle the full media arc — <strong>so your team can run the event while I run the story.</strong></p>'},
+  {num:'06',title:'Digital Advertising Management',td:'Digital<br><em>Advertising</em>',sub:'Paid campaigns that convert — Meta, Google, and beyond, end-to-end.',inc:['Campaign strategy','Audience research & targeting','Ad creative direction','Meta & Google Ads','A/B testing','Performance reporting'],hl:'Paid media that<br><em>earns its budget.</em>',body:'<p class="sd-p">Advertising only works when strategy, creative, and targeting are aligned. I manage digital advertising end-to-end: from audience strategy and creative direction to campaign management and reporting.</p><p class="sd-p">The goal is always: <strong>campaigns that justify their spend</strong> with measurable results.</p>'}
+];
+
+/* cursor */
+const dot=document.getElementById('dot');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+function bindHover(){
+  document.querySelectorAll('a,button,.witem,.srow,.sd-oi,.pd-next-name,[onclick]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('link-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('link-hover'));
+  });
+}
+bindHover();
+
+/* reveal */
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+function attachReveal(){document.querySelectorAll('.r:not(.in)').forEach(el=>rio.observe(el))}
+attachReveal();
+
+/* pages */
+function showPg(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  window.scrollTo({top:0,behavior:'instant'});
+  setTimeout(()=>{attachReveal();bindHover()},80);
+}
+function goHome(){showPg('pg-home')}
+function goto(id){setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})},60)}
+
+/* project */
+function openProj(key){
+  const p=PJ[key],nx=PJ[p.next];
+  const imgs=p.imgs.map(i=>`<div class="pd-gal-item ${i.c}"><img src="${i.s}" alt="${p.title}" loading="lazy"></div>`).join('');
+  const stats=p.stats.map(s=>`<div><div class="pd-sn">${s.n}</div><div class="pd-sl">${s.l}</div></div>`).join('');
+  const tags=p.tags.map(t=>`<div class="pd-tag-i">${t}</div>`).join('');
+  document.getElementById('proj-slot').innerHTML=`
+    <div class="pd-hero">
+      <img src="${p.hero}" alt="${p.title}">
+      <div class="pd-hero-overlay"></div>
+      <div class="pd-hero-text">
+        <a href="#" class="pd-back" onclick="goHome();return false">← Back</a>
+        <div class="pd-tag">${p.yr} · ${p.role}</div>
+        <h1 class="pd-title">${p.title}</h1>
+        <div class="pd-meta-row">
+          <div class="pd-meta-i">Client: <strong>${p.client}</strong></div>
+          <div class="pd-meta-i">Event: <strong>${p.event}</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-body">
+      <div class="pd-cols r">
+        <div><p class="pd-side-lbl">Services</p><div>${tags}</div></div>
+        <div>
+          <h2 class="pd-main-hl">${p.hl}</h2>
+          ${p.body}
+          <div class="pd-stats-row">${stats}</div>
+        </div>
+      </div>
+      <div class="pd-gallery r d2">
+        <div class="pd-gal-grid ${p.imgs.length>1?'two':'one'}">${imgs}</div>
+      </div>
+    </div>
+    <div class="pd-next r">
+      <div>
+        <div class="pd-next-lbl">Next project</div>
+        <div class="pd-next-name" onclick="openProj('${p.next}')">${nx.title} →</div>
+      </div>
+      <a href="#" onclick="goHome();return false" class="btn-outline">All work →</a>
+    </div>
+    <footer><span class="ft">Ahmad Abdallah Studio</span><span class="ft">© 2025</span></footer>
+  `;
+  showPg('pg-proj');
+}
+
+/* service */
+function openSvc(i){
+  const s=SV[i];
+  const inc=s.inc.map(x=>`<div class="sd-inc-item">${x}</div>`).join('');
+  const others=SV.filter((_,j)=>j!==i).map(o=>`<div class="sd-oi" onclick="openSvc(${SV.indexOf(o)})"><div class="sd-oi-n">${o.num}</div><div class="sd-oi-name">${o.title}</div></div>`).join('');
+  document.getElementById('svc-slot').innerHTML=`
+    <div class="sd-hero">
+      <a href="#" class="pd-back" style="color:#000;opacity:.4;margin-bottom:28px;display:inline-flex" onclick="goHome();return false">← Back</a>
+      <div class="sd-num">${s.num} / 06</div>
+      <h1 class="sd-title">${s.td}</h1>
+      <p class="sd-sub">${s.sub}</p>
+    </div>
+    <div class="sd-body r">
+      <div><p class="sd-inc-lbl">Includes</p><div>${inc}</div></div>
+      <div>
+        <h2 class="sd-main-hl">${s.hl}</h2>
+        ${s.body}
+        <div class="sd-cta">
+          <a href="mailto:hello@ahmadabdallah.studio" class="btn">Start a conversation →</a>
+        </div>
+      </div>
+    </div>
+    <div class="sd-others-wrap r d1">
+      <p class="sd-others-lbl">Other services</p>
+      <div class="sd-others">${others}</div>
+    </div>
+    <footer style="margin-top:60px"><span class="ft">Ahmad Abdallah Studio</span><span class="ft">© 2025</span></footer>
+  `;
+  showPg('pg-svc-detail');
+}
+</script>
+</body>
+</html>
