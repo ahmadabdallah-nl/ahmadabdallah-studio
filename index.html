@@ -435,8 +435,25 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-2);
 }
 
+/* ---- Responsive ---- */
+@media (max-width: 880px) {
+  :root { --gutter: 20px; }
+  .aa-grid-2 { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .aa-metrics { grid-template-columns: 1fr 1fr !important; }
+  .aa-svc-row a { grid-template-columns: 40px 1fr !important; }
+  .aa-svc-row a > :nth-child(3) { display: none !important; }
+  .aa-fact-row { grid-template-columns: 1fr !important; gap: 4px !important; }
+  .aa-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+}
+
 @media (max-width: 720px) {
   .aa-sec-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+  .aa-marquee span { font-size: 22px !important; padding: 0 14px !important; }
+  .aa-metrics { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 520px) {
+  :root { --gutter: 16px; }
 }
 
 
@@ -491,8 +508,8 @@ function useReveal() {
 }
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "theme": "dark",
-  "density": "default",
+  "theme": "light",
+  "density": "airy",
   "pressred": "off"
 }/*EDITMODE-END*/;
 
@@ -628,7 +645,7 @@ function Footer() {
       borderTop: '1px solid var(--border-1)'
     }}>
       <div className="aa-wrap">
-        <div style={{
+        <div className="aa-footer-grid" style={{
           display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 48,
           paddingBottom: 64
         }}>
@@ -1039,28 +1056,23 @@ function ProjectCard({ n, eyebrow, title, meta, desc, img, size, href }) {
 
 function Services() {
   const list = [
-  'Social media management & strategy',
-  'Content creation & architecture',
-  'Brand strategy & identity',
-  'Art direction & visual systems',
-  'Meta & Google Ads',
-  'Email campaign design & marketing',
-  'Website design & development',
-  'Product photography',
-  'Content strategy'];
+  { label: 'Creative & Media Direction', sub: 'Brand strategy, visual systems, art direction.' },
+  { label: 'Social & Content Architecture', sub: 'Strategy, content direction, posting cadence, voice.' },
+  { label: 'Campaigns & Performance', sub: 'Meta & Google Ads, email, conversion design.' },
+  { label: 'Photography & On-site Direction', sub: 'Editorial, product, event coverage.' }];
 
   return (
     <section id="services" className="aa-sec" style={{ background: 'var(--bg-2)' }}>
       <div className="aa-wrap">
         <div className="aa-sec-head">
           <div><div className="num">03 / Services</div></div>
-          <h2>What I do.<br />
-            <span style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--fg-2)' }}>Nine offers, one studio.</span>
+          <h2>What I direct.<br />
+            <span style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--fg-2)' }}>Four disciplines, one operator.</span>
           </h2>
         </div>
         <ol style={{ listStyle: 'none', padding: 0, margin: 0 }}>
           {list.map((s, i) =>
-          <ServiceRow key={i} n={String(i + 1).padStart(2, '0')} label={s} />
+          <ServiceRow key={i} n={String(i + 1).padStart(2, '0')} label={s.label} sub={s.sub} />
           )}
         </ol>
       </div>
@@ -1068,34 +1080,46 @@ function Services() {
 
 }
 
-function ServiceRow({ n, label }) {
+function ServiceRow({ n, label, sub }) {
   const [hover, setHover] = React.useState(false);
   return (
-    <li className="reveal"
-    onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-    style={{
-      display: 'grid', gridTemplateColumns: '80px 1fr auto',
-      alignItems: 'baseline', padding: '22px 0',
-      borderTop: '1px solid var(--border-1)',
-      transition: 'padding 240ms var(--ease-out)',
-      paddingLeft: hover ? 16 : 0,
-      cursor: 'pointer'
-    }}>
-      <span style={{
-        fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-2)'
-      }}>{n}</span>
-      <span style={{
-        fontFamily: 'var(--font-display)',
-        fontSize: 'clamp(28px, 3.4vw, 48px)', fontWeight: 500,
-        lineHeight: 1.1, letterSpacing: '-0.01em', color: 'var(--fg-1)'
-      }}>{label}</span>
-      <span style={{
-        fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 500,
-        letterSpacing: '0.18em', textTransform: 'uppercase',
-        color: hover ? 'var(--fg-1)' : 'var(--fg-2)',
-        transition: 'color 160ms var(--ease-out), transform 240ms var(--ease-out)',
-        transform: hover ? 'translateX(0)' : 'translateX(-6px)'
-      }}>Inquire →</span>
+    <li className="reveal aa-svc-row">
+      <a href="#/contact"
+        onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        style={{
+          display: 'grid', gridTemplateColumns: '80px 1fr auto',
+          alignItems: 'baseline', padding: '22px 0',
+          borderTop: '1px solid var(--border-1)',
+          transition: 'padding 240ms var(--ease-out)',
+          paddingLeft: hover ? 16 : 0,
+          cursor: 'pointer', textDecoration: 'none', color: 'inherit'
+        }}>
+        <span style={{
+          fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-2)'
+        }}>{n}</span>
+        <span>
+          <span style={{
+            display: 'block',
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(26px, 3.4vw, 48px)', fontWeight: 500,
+            lineHeight: 1.1, letterSpacing: '-0.01em', color: 'var(--fg-1)'
+          }}>{label}</span>
+          {sub &&
+            <span style={{
+              display: 'block', marginTop: 8,
+              fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 400,
+              color: 'var(--fg-2)', maxWidth: 560
+            }}>{sub}</span>
+          }
+        </span>
+        <span style={{
+          fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 500,
+          letterSpacing: '0.18em', textTransform: 'uppercase',
+          color: hover ? 'var(--fg-1)' : 'var(--fg-2)',
+          transition: 'color 160ms var(--ease-out), transform 240ms var(--ease-out)',
+          transform: hover ? 'translateX(0)' : 'translateX(-6px)'
+        }}>Inquire →</span>
+      </a>
     </li>);
 
 }
@@ -1113,16 +1137,16 @@ function Manifest() {
           borderTop: '1px solid var(--fg-1)'
         }} className="aa-grid-2">
           <Column label="I AM" items={[
-          'A Creative Media Director — strategy and execution.',
-          'One person. Direct contact. No middlemen.',
-          'Premium, not exclusive. Accessible, not cheap.',
-          'Young, but not immature. 19 is an asset.']
+          'Creative Media Director — strategy and execution, end to end.',
+          'One operator. Direct contact. No agency layers, no account managers.',
+          'Selective. I take fewer projects so each one gets real direction.',
+          'Young by years, sharp by output. 19 is an asset, not a caveat.']
           } />
           <Column label="I AM NOT" muted items={[
           'A social media manager who just posts content.',
           'An agency. A team of strangers. A middleman.',
-          'For exposure. Ever.',
-          'A pitiful narrative. My story is strength.']
+          'A vendor for exposure or "good visibility".',
+          'A tragedy story. The path is context, not the pitch.']
           } />
         </div>
 
@@ -1924,12 +1948,19 @@ function About() {
       <section style={{ padding: 'clamp(48px,7vw,128px) 0 0' }}>
         <div className="aa-wrap">
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 500,
-            letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--fg-2)' }}>About — One person, one studio</div>
+            letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--fg-2)' }}>About — Creative Media Director</div>
           <h1 className="reveal" style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(56px, 11vw, 192px)', fontWeight: 500,
+            fontSize: 'clamp(48px, 11vw, 192px)', fontWeight: 500,
             lineHeight: 0.92, letterSpacing: '-0.03em', margin: '24px 0 0'
           }}>Ahmad<br /><span style={{ fontStyle: 'italic', fontWeight: 400 }}>Abdallah.</span></h1>
+          <p className="reveal" style={{
+            marginTop: 32, maxWidth: 720,
+            fontFamily: 'var(--font-body)', fontSize: 'clamp(17px, 1.6vw, 22px)',
+            fontWeight: 300, lineHeight: 1.5, color: 'var(--fg-2)', textWrap: 'pretty'
+          }}>
+            Creative Media Director directing brand presence — strategy, visual systems and on-site execution — for brands, talent and cultural projects across Europe.
+          </p>
         </div>
       </section>
 
@@ -1953,24 +1984,19 @@ function About() {
               fontWeight: 300, lineHeight: 1.55, color: 'var(--fg-1)', maxWidth: 720,
               margin: 0
             }}>
-              I'm 19, based in IJmuiden / Haarlem. I direct brand presence — strategy and
-              execution — for brands, talent and cultural projects across Europe.
+              I'm 19, based in IJmuiden / Haarlem. I direct brand presence — strategy, visual systems, and the work itself — for brands, talent and cultural projects across the Netherlands and Italy.
             </p>
             <p className="reveal" style={{
               fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: 400,
               lineHeight: 1.7, color: 'var(--fg-2)', maxWidth: 640, marginTop: 28
             }}>
-              I came to the Netherlands four years ago as a refugee from Syria. I started
-              the studio in 2024. The work is the work — but the path makes me read briefs
-              differently. I take fewer projects, write the strategy myself, and stay
-              involved end to end.
+              Born in Damascus, 2007. Came to the Netherlands in 2022 as a refugee. Started the studio in 2024. Two years in: Milan Design Week (2025 + 2026), EDIT Napoli, a recurring column with De Jutter from May 2026, and a portfolio of Dutch design clients on retainer.
             </p>
             <p className="reveal" style={{
               fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: 400,
               lineHeight: 1.7, color: 'var(--fg-2)', maxWidth: 640, marginTop: 16
             }}>
-              The studio is intentionally small. One operator, a tight bench of trusted
-              collaborators, and a short list of projects on retainer.
+              The studio is intentionally small. One operator, a tight bench of trusted collaborators, and a short list of projects on retainer. I write the strategy myself, direct the shoot, and stay involved end to end — that's the offer.
             </p>
           </div>
         </div>
@@ -1985,16 +2011,16 @@ function About() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0,
             borderTop: '1px solid var(--fg-1)' }} className="aa-grid-2">
             <AboutColumn label="I AM" items={[
-            'A Creative Media Director — strategy and execution.',
-            'One person. Direct contact. No middlemen.',
-            'Premium, not exclusive. Accessible, not cheap.',
-            'Young, but not immature. 19 is an asset.']
+            'Creative Media Director — strategy and execution, end to end.',
+            'One operator. Direct contact. No agency layers, no account managers.',
+            'Selective. I take fewer projects so each one gets real direction.',
+            'Young by years, sharp by output. 19 is an asset, not a caveat.']
             } />
             <AboutColumn label="I AM NOT" muted items={[
             'A social media manager who just posts content.',
             'An agency. A team of strangers. A middleman.',
-            'For exposure. Ever.',
-            'A pitiful narrative. My story is strength.']
+            'A vendor for exposure or "good visibility".',
+            'A tragedy story. The path is context, not the pitch.']
             } />
           </div>
         </div>
@@ -2012,9 +2038,9 @@ function About() {
             ['Based', 'IJmuiden / Haarlem, NL'],
             ['Studio founded', '2024'],
             ['Languages', 'EN · NL · AR'],
-            ['Recent work', 'Milan Design Week · Paris Fashion Week · EDIT Napoli'],
-            ['Press', 'IJmuider Courant — De Jutter, January 2026'],
-            ['AboutColumn', 'De Jutter — recurring, from May 2026'],
+            ['Recent work', 'Milan Design Week 2025–26 · EDIT Napoli · Zielsglas Haarlem'],
+            ['Press', 'IJmuider Courant — feature, January 2026'],
+            ['Column', 'De Jutter — recurring, from May 2026'],
             ['Contact', 'hello@ahmadabdallah.studio']].
             map(([k, v], i) =>
             <div key={i} className="reveal" style={{
@@ -2384,3 +2410,4 @@ __root.render(<Router />);
 </script>
 </body>
 </html>
+
